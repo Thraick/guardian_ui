@@ -3,7 +3,7 @@ import { Input } from "~/components/ui/input";
 import { editFaqs } from "~/resolvers/faqs";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "~/components/ui/button";
-import { Form } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { Textarea } from "~/components/ui/textarea";
 import { X } from "lucide-react";
 
@@ -25,7 +25,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 // export const loader: LoaderFunction =async ({request}) => {
-    
+
 // }
 
 
@@ -35,9 +35,11 @@ export default function UpdateFaqs() {
         <div className="flex justify-center items-center h-screen">
 
             <Form method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-2xl w-full">
-            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-4">
                     <h1 className="text-2xl font-bold">Update Faq</h1>
-                    <Button variant={"ghost"}><X/></Button>
+                    <Link to={'/faqs'}>
+                        <Button variant={"ghost"}><X /></Button>
+                    </Link>
                 </div>
                 <div className="mb-4">
                     <Label htmlFor="question"
