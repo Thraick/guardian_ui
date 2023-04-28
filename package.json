@@ -18,6 +18,7 @@
     "clsx": "^1.2.1",
     "isbot": "^3.6.8",
     "lucide-react": "^0.170.0",
+    "npm": "^9.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-server-kit": "^3.0.0-beta5",
