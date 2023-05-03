@@ -6,16 +6,7 @@ import { httpRequest } from "~/utils/httpRequest"
 import DeletelabelDialog from "./entity_config.labels.delete"
 import { Input } from "~/components/ui/input"
 import { useState } from "react"
-<<<<<<< HEAD
-
-
-export type labelType = {
-    id: string,
-    label: string
-}
-=======
 import { LabelFormValues } from "./entity_config.labels_.$id"
->>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -33,11 +24,7 @@ export async function loader({ request }: LoaderArgs) {
 
 
 export default function EntityConfig() {
-<<<<<<< HEAD
-    const loaderData = useLoaderData() as labelType[];
-=======
     const loaderData = useLoaderData() as LabelFormValues[];
->>>>>>> a84ba05 (undo copy update)
     const [searchTerm, setSearchTerm] = useState("");
 
 
@@ -62,11 +49,7 @@ export default function EntityConfig() {
                             res.label.toLowerCase().includes(searchTerm.toLowerCase())
                         )
                         .reverse()
-<<<<<<< HEAD
-                        .map((res: labelType) => (
-=======
                         .map((res: LabelFormValues) => (
->>>>>>> a84ba05 (undo copy update)
                             <div key={res.id} className="bg-white max-w-3xl mx-auto hover: bg-accent  shadow-sm rounded px-8 pt-6 pb-8 mb-4">
                                 <div className="flex justify-between items-center">
                                     <h3 className="text-lg font-bold">{res.label}</h3>

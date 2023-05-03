@@ -112,17 +112,6 @@ export default function NewFaqs() {
                         <Button type="submit" variant={"secondary"}>Create</Button>
                     </div>
                 </Form>
-<<<<<<< HEAD
-
-                {
-                    actionData &&
-                    <div className="bg-yellow-100 text-center text-yellow-700 p-4" role="alert">
-                        <p className="font-bold">Warning</p>
-                        <p>{actionData}</p>
-                    </div>
-                }
-            </div>
-=======
 
                 {
                     actionData &&
@@ -133,7 +122,6 @@ export default function NewFaqs() {
                 }
             </div>
 
->>>>>>> a84ba05 (undo copy update)
         </div>
     )
 }

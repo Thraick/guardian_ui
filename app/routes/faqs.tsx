@@ -6,10 +6,7 @@ import { httpRequest } from "~/utils/httpRequest";
 import { Link, useLoaderData } from "@remix-run/react";
 import DeleteFaqDialog from "./faqs.delete";
 import { useState } from "react";
-<<<<<<< HEAD
-=======
 import { FaqFormValues } from "./faqs_.$id";
->>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -18,14 +15,7 @@ export async function loader({ request }: LoaderArgs) {
         const response = await httpRequest("list_faqs", {})
         const memories = response.payload
         console.log(memories)
-<<<<<<< HEAD
-        if (memories){ return memories;}
-        else{
-            return null;
-        }
-=======
         return memories;
->>>>>>> a84ba05 (undo copy update)
     } catch (error) {
         return error;
     }
@@ -39,14 +29,9 @@ export type faqsType = {
 }
 
 
-<<<<<<< HEAD
-export default function faqs() {
-    const loaderData = useLoaderData() as faqsType[];
-=======
 
 export default function faqs() {
     const loaderData = useLoaderData() as FaqFormValues[];
->>>>>>> a84ba05 (undo copy update)
     const [searchTerm, setSearchTerm] = useState("");
 
 
@@ -71,11 +56,7 @@ export default function faqs() {
                             res.question.toLowerCase().includes(searchTerm.toLowerCase())
                         )
                         .reverse()
-<<<<<<< HEAD
-                        .map((res: faqsType) => (
-=======
                         .map((res: FaqFormValues) => (
->>>>>>> a84ba05 (undo copy update)
                             <div key={res.id} className="bg-background max-w-3xl mx-auto hover:bg-card  shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-lg font-bold">{res.question}</h3>

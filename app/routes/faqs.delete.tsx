@@ -9,16 +9,10 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "~/components/ui/dialog";
-<<<<<<< HEAD
-import { faqsType } from "./faqs";
-import { ActionArgs, redirect } from "@remix-run/node";
-import { deleteFaqs } from "~/resolvers/faqs";
-=======
 
 import { ActionArgs, redirect } from "@remix-run/node";
 import { deleteFaqs } from "~/resolvers/faqs";
 import { FaqFormValues } from "./faqs_.$id";
->>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -36,11 +30,7 @@ export async function action({ request }: ActionArgs) {
 };
 
 
-<<<<<<< HEAD
-export default function DeleteFaqDialog(props: { res: faqsType }) {
-=======
 export default function DeleteFaqDialog(props: { res: FaqFormValues }) {
->>>>>>> a84ba05 (undo copy update)
     const submit = useSubmit();
 
     function handleSubmit() {

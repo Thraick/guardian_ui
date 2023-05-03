@@ -3,7 +3,7 @@ import { Input } from "~/components/ui/input";
 import { editFaqs } from "~/resolvers/faqs";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "~/components/ui/button";
-import { Form, Link, useActionData, useLoaderData, useSubmit } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData, useParams, useSubmit } from "@remix-run/react";
 import { Textarea } from "~/components/ui/textarea";
 import { X } from "lucide-react";
 import { httpRequest } from "~/utils/httpRequest";
@@ -36,6 +36,7 @@ export async function action({ request }: ActionArgs) {
         id
     }
     try {
+        console.log(ctx)
         const payload = await editFaqs({ ctx })
         if (payload.info.warning) {
             return payload.info.warning;
@@ -52,13 +53,9 @@ export async function loader({ params }: LoaderArgs) {
     try {
         console.log(params.id)
         const response = await httpRequest("get_faq", { id: params.id })
-<<<<<<< HEAD
-        const memories = response.payload
-=======
         const memories = response.payload || null
->>>>>>> a84ba05 (undo copy update)
         console.log(memories)
-        return memories[0];
+        return memories;
     } catch (error) {
         console.log("error")
         console.log(error)
@@ -70,8 +67,13 @@ export async function loader({ params }: LoaderArgs) {
 export default function UpdateFaqs() {
     const loaderData = useLoaderData() as FaqFormValues;
     const submit = useSubmit();
+    const { id } = useParams();
+    let faqId = ""
+    if(id) {
+        faqId = id
+    }
     const actionData = useActionData();
-    const [formValues, setFormValues] = useState<FaqFormValues>({ question: loaderData.question, answer: loaderData.answer, id: loaderData.id } || { id: "", question: "", answer: "" });
+    const [formValues, setFormValues] = useState<FaqFormValues>({ question: loaderData.question, answer: loaderData.answer, id: faqId } || { id: "", question: "", answer: "" });
     const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -95,7 +97,7 @@ export default function UpdateFaqs() {
         const formData = new FormData();
         formData.append('question', formValues.question);
         formData.append('answer', formValues.answer);
-        formData.append('id', formValues.id);
+        if(id) formData.append('id', formValues.id);
         submit(formData, { method: 'post', action: `/faqs/${formValues.id}` });
     }
 

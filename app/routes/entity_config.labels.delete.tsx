@@ -9,16 +9,10 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "~/components/ui/dialog";
-<<<<<<< HEAD
-import { faqsType } from "./faqs";
-import { ActionArgs, redirect } from "@remix-run/node";
-import { labelType } from "./entity_config.labels";
-=======
 
 import { ActionArgs, redirect } from "@remix-run/node";
 import { LabelFormValues } from "./entity_config.labels_.$id";
 import { deleteLabel } from "~/resolvers/configLabel";
->>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -31,33 +25,17 @@ export async function action({ request }: ActionArgs) {
     }
     console.log("ctx delete")
     console.log(ctx)
-<<<<<<< HEAD
-    // try {
-    //     await editFaqs({ ctx })
-    //     return redirect('/faqs')
-    // } catch (error) {
-    //     return error;
-    // }
-
-
-    return redirect('/entity_config/labels');
-=======
     try {
         await deleteLabel({ ctx })
         return redirect('/entity_config/labels')
     } catch (error) {
         return error;
     }
->>>>>>> a84ba05 (undo copy update)
 };
 
 
 
-<<<<<<< HEAD
-export default function DeletelabelDialog(props: { res: labelType }) {
-=======
 export default function DeletelabelDialog(props: { res: LabelFormValues }) {
->>>>>>> a84ba05 (undo copy update)
     const submit = useSubmit();
 
     function handleSubmit() {
@@ -77,11 +55,7 @@ export default function DeletelabelDialog(props: { res: LabelFormValues }) {
                     <DialogDescription>{props.res.label}</DialogDescription>
                     <DialogFooter>
                         <DialogClose asChild>
-<<<<<<< HEAD
-                            <Button type="submit" autoFocus onClick={handleSubmit}>Delete</Button>
-=======
                             <Button type="submit" autoFocus onClick={handleSubmit} >Delete</Button>
->>>>>>> a84ba05 (undo copy update)
                         </DialogClose>
                     </DialogFooter>
                 </DialogContent>

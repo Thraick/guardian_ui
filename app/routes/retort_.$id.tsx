@@ -3,15 +3,6 @@ import { Input } from "~/components/ui/input";
 import { editFaqs } from "~/resolvers/faqs";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "~/components/ui/button";
-<<<<<<< HEAD
-import { Form, Link } from "@remix-run/react";
-import { Textarea } from "~/components/ui/textarea";
-import { X } from "lucide-react";
-import { httpRequest } from "~/utils/httpRequest";
-import { faqsType } from "./faqs";
-import { useState } from "react";
-import { retort_topic_Type } from "./retort";
-=======
 import { Form, Link, useActionData, useLoaderData, useSubmit } from "@remix-run/react";
 import { Textarea } from "~/components/ui/textarea";
 import { X } from "lucide-react";
@@ -30,7 +21,6 @@ const schema = z.object({
 });
 
 export type Retort_TopicFormValues = z.infer<typeof schema>;
->>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -43,19 +33,6 @@ export async function action({ request }: ActionArgs) {
         retort_topic,
         id
     }
-<<<<<<< HEAD
-    console.log("ctx")
-    console.log(ctx)
-    // try {
-    //     await editFaqs({ ctx })
-    //     return redirect('/faqs')
-    // } catch (error) {
-    //     return error;
-    // }
-
-
-    return redirect('/retort');
-=======
     try {
         const payload = await editFaqs({ ctx })
         if (payload.info.warning) {
@@ -65,7 +42,6 @@ export async function action({ request }: ActionArgs) {
     } catch (error) {
         return error;
     }
->>>>>>> a84ba05 (undo copy update)
 };
 
 
@@ -86,56 +62,6 @@ export async function loader({ params }: LoaderArgs) {
 
 
 export default function UpdateFaqs() {
-<<<<<<< HEAD
-    // const loaderData = useLoaderData();
-    const loaderData = dataset as retort_topic_Type;
-
-    const [formData, setFormData] = useState<retort_topic_Type>(
-        loaderData || { id: "", retort_topic: ""}
-    );
-
-    function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value,
-        });
-    }
-
-    return (
-        <div className="flex justify-center items-center h-screen">
-
-            <Form method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-2xl w-full">
-                <div className="flex items-center justify-between mb-4">
-                    <h1 className="text-2xl font-bold">Update Retort</h1>
-                    <Link to={'/retort'}>
-                        <Button variant={"ghost"}><X /></Button>
-                    </Link>
-                </div>
-                <div className="mb-4">
-                    <Label htmlFor="retort_topic"
-                    >
-                        Retort Topic
-                    </Label>
-                    <Input
-                        name="retort_topic"
-                        type="text"
-                        value={formData.retort_topic}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
-                    <Input
-                        name="id"
-                        type="hidden"
-                        value={formData.id}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="flex items-center justify-between">
-                    <Button type="submit" variant={"secondary"}>Update</Button>
-                </div>
-            </Form>
-=======
     // // const loaderData = useLoaderData();
     // const loaderData = dataset as retort_topic_Type;
 
@@ -219,7 +145,6 @@ export default function UpdateFaqs() {
                     </div>
                 }
             </div>
->>>>>>> a84ba05 (undo copy update)
         </div>
     )
 }

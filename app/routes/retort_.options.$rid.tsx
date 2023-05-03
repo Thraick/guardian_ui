@@ -3,32 +3,6 @@ import { BellRing, Check, Edit, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { httpRequest } from "~/utils/httpRequest";
-<<<<<<< HEAD
-import { Link } from "@remix-run/react";
-import DeleteFaqDialog from "./faqs.delete";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-
-
-// export async function action({ request }: ActionArgs) {
-
-//     const formData = await request.formData();
-//     const id = formData.get('id')
-//     const ctx = {
-//         id
-//     }
-//     console.log("ctx")
-//     console.log(ctx)
-//     // try {
-//     //     await editFaqs({ ctx })
-//     //     return redirect('/faqs')
-//     // } catch (error) {
-//     //     return error;
-//     // }
-
-
-//     return redirect('/faqs');
-// };
-=======
 import { Link, useLoaderData, useParams, useSearchParams } from "@remix-run/react";
 import DeleteFaqDialog from "./faqs.delete";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
@@ -38,7 +12,6 @@ import { useEffect, useState } from "react";
 
 
 
->>>>>>> a84ba05 (undo copy update)
 
 export async function loader({ params }: LoaderArgs) {
     console.log(params.rid)
@@ -54,66 +27,6 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 
-<<<<<<< HEAD
-export type faqsType = {
-    id: string,
-    question: string,
-    answer: string
-}
-
-
-export default function faqs() {
-    // const loaderData = useLoaderData();
-    const loaderData = dataset.payload as faqsType[];
-    const id = "urn:uuid:a87a8c0b-674d-4766-9f54-1466e21e75b3"
-
-
-    return (
-        <>
-            {/* <div className="max-w-3xl mx-auto max-h-screen bg-gray-500"> */}
-            <div className="flex-1 justify-between flex flex-col bg-background">
-                <div className="bg-background shadow-md p-4 flex justify-between items-center">
-                    <h1 className="text-2xl font-bold">Retort Options</h1>
-                    {/* <Input type="text" placeholder="Search" className="border rounded-md w-48 px-4 py-2 ml-4" /> */}
-                </div>
-
-
-                {/* <div className="overflow-y-auto mt-4 max-h-3/4 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex-grow">
-
-                    {loaderData.map((res: faqsType) => (
-                        <div key={res.id} className="bg-white max-w-3xl mx-auto hover: bg-accent  shadow-sm rounded px-8 pt-6 pb-8 mb-4">
-                            <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-lg font-bold">{res.question}</h3>
-                                <div>
-                                    <Link to={`/faqs/${res.id}`}>
-                                        <Button variant={"outline"}><Edit className="mr-2 h-4 w-4" /> Edit</Button>
-                                    </Link>
-                                    <DeleteFaqDialog res={res} />
-                                </div>
-                            </div>
-                            <h2 className="text-gray-700">{res.answer}</h2>
-                        </div>
-                    ))}
-                </div> */}
-
-                {/* <div className="bg-gray-500"> */}
-                {/* <h1>hello</h1>
-                    <Link to={'probes'}>probes</Link>
-                    <Link to={'probes'}>probes</Link>
-                    <Link to={'probes'}>probes</Link> */}
-
-                <div className="flex mt-20">
-                    <div className="w-1/3 mx-2">
-                        <Link to={`/retort/options/${id}/probes`}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Probes</CardTitle>
-                                    {/* <CardDescription>Card Description</CardDescription> */}
-                                </CardHeader>
-                                {/* <CardContent>
-                                    <p>Card Content</p>
-                                </CardContent> */}
-=======
 
 export default function faqs() {
     const loaderData = useLoaderData() as ProbeFormValues[];
@@ -146,7 +59,6 @@ export default function faqs() {
                                 <CardHeader>
                                     <CardTitle>Probes</CardTitle>
                                 </CardHeader>
->>>>>>> a84ba05 (undo copy update)
                                 <CardFooter>
                                     <p>30 Probes</p>
                                 </CardFooter>
@@ -157,15 +69,7 @@ export default function faqs() {
                         <Card>
                             <CardHeader>
                                 <CardTitle>Commentary</CardTitle>
-<<<<<<< HEAD
-                                {/* <CardDescription>Card Description</CardDescription> */}
                             </CardHeader>
-                            {/* <CardContent>
-                                    <p>Commentary about retort.</p>
-                                </CardContent> */}
-=======
-                            </CardHeader>
->>>>>>> a84ba05 (undo copy update)
                             <CardFooter>
                                 <p>30 Commentarys</p>
                             </CardFooter>
@@ -175,38 +79,15 @@ export default function faqs() {
                         <Card>
                             <CardHeader>
                                 <CardTitle>Concepts</CardTitle>
-<<<<<<< HEAD
-                                {/* <CardDescription>Card Description</CardDescription> */}
                             </CardHeader>
-                            {/* <CardContent>
-                                    <p>Card Content</p>
-                                </CardContent> */}
-=======
-                            </CardHeader>
->>>>>>> a84ba05 (undo copy update)
                             <CardFooter>
                                 <p>30 Concepts</p>
                             </CardFooter>
                         </Card>
                     </div>
                 </div>
-<<<<<<< HEAD
-
-                {/* </div> */}
             </div>
 
-            {/* <div className="absolute bottom-10 right-10">
-                <Link to={'/faqs/new'}>
-                    <Button variant={"secondary"} className="bg-primary text-secondary hover:text-primary rounded-full flex items-center justify-center h-14 py-4 px-4">
-                        <Plus />
-                    </Button>
-                </Link>
-            </div> */}
-
-=======
-            </div>
-
->>>>>>> a84ba05 (undo copy update)
         </>
 
     );

@@ -17,13 +17,10 @@ export async function httpRequest(name: string, ctx: Record<string, any>) {
         },
         {headers: {Authorization: "Token " + _config.token}}
         );
-<<<<<<< HEAD
-=======
         if (!res.data) {
             console.log('error throw')
             throw new Error('Payload is null');
         }
->>>>>>> a84ba05 (undo copy update)
         return res.data;
     } catch (error) {
         return error;
