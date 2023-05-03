@@ -3,6 +3,7 @@ import { BellRing, Check, Edit, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { httpRequest } from "~/utils/httpRequest";
+<<<<<<< HEAD
 import { Link } from "@remix-run/react";
 import DeleteFaqDialog from "./faqs.delete";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
@@ -27,6 +28,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 //     return redirect('/faqs');
 // };
+=======
+import { Link, useLoaderData, useParams, useSearchParams } from "@remix-run/react";
+import DeleteFaqDialog from "./faqs.delete";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { ProbeFormValues } from "./retort_.options.$rid_.probes_.$pid";
+import { cache, localStorageService } from "~/resolvers/cache";
+import { useEffect, useState } from "react";
+
+
+
+>>>>>>> a84ba05 (undo copy update)
 
 export async function loader({ params }: LoaderArgs) {
     console.log(params.rid)
@@ -42,6 +54,7 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 
+<<<<<<< HEAD
 export type faqsType = {
     id: string,
     question: string,
@@ -100,6 +113,40 @@ export default function faqs() {
                                 {/* <CardContent>
                                     <p>Card Content</p>
                                 </CardContent> */}
+=======
+
+export default function faqs() {
+    const loaderData = useLoaderData() as ProbeFormValues[];
+    const { rid } = useParams();
+
+    const [retortTopic, setRetortTopic] = useState('');
+
+    useEffect(() => {
+        const topic = localStorageService.getItem('retort_topic') as string;
+        setRetortTopic(topic);
+    }, []);
+
+
+    // const retort_topic = "sss"
+
+    return (
+        <>
+            <div className="flex-1 justify-between flex flex-col bg-background">
+                <div className="bg-background shadow-md p-4 flex justify-between items-center">
+                    {retortTopic ? (
+                        <h1 className="text-2xl font-bold">{retortTopic} Retort</h1>
+                    ) : (
+                        <h1 className="text-2xl font-bold">Retort</h1>
+                    )}
+                </div>
+                <div className="flex mt-20">
+                    <div className="w-1/3 mx-2">
+                        <Link to={`/retort/options/${rid}/probes`}>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Probes</CardTitle>
+                                </CardHeader>
+>>>>>>> a84ba05 (undo copy update)
                                 <CardFooter>
                                     <p>30 Probes</p>
                                 </CardFooter>
@@ -110,11 +157,15 @@ export default function faqs() {
                         <Card>
                             <CardHeader>
                                 <CardTitle>Commentary</CardTitle>
+<<<<<<< HEAD
                                 {/* <CardDescription>Card Description</CardDescription> */}
                             </CardHeader>
                             {/* <CardContent>
                                     <p>Commentary about retort.</p>
                                 </CardContent> */}
+=======
+                            </CardHeader>
+>>>>>>> a84ba05 (undo copy update)
                             <CardFooter>
                                 <p>30 Commentarys</p>
                             </CardFooter>
@@ -124,17 +175,22 @@ export default function faqs() {
                         <Card>
                             <CardHeader>
                                 <CardTitle>Concepts</CardTitle>
+<<<<<<< HEAD
                                 {/* <CardDescription>Card Description</CardDescription> */}
                             </CardHeader>
                             {/* <CardContent>
                                     <p>Card Content</p>
                                 </CardContent> */}
+=======
+                            </CardHeader>
+>>>>>>> a84ba05 (undo copy update)
                             <CardFooter>
                                 <p>30 Concepts</p>
                             </CardFooter>
                         </Card>
                     </div>
                 </div>
+<<<<<<< HEAD
 
                 {/* </div> */}
             </div>
@@ -147,6 +203,10 @@ export default function faqs() {
                 </Link>
             </div> */}
 
+=======
+            </div>
+
+>>>>>>> a84ba05 (undo copy update)
         </>
 
     );

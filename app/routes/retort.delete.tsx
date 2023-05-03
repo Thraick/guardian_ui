@@ -9,9 +9,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "~/components/ui/dialog";
+<<<<<<< HEAD
 import { faqsType } from "./faqs";
 import { ActionArgs, redirect } from "@remix-run/node";
 import { retort_topic_Type } from "./retort";
+=======
+import { ActionArgs, redirect } from "@remix-run/node";
+import { Retort_TopicFormValues } from "./retort_.$id";
+import { deleteRetortTopic } from "~/resolvers/retortTopic";
+>>>>>>> a84ba05 (undo copy update)
 
 
 
@@ -24,6 +30,7 @@ export async function action({ request }: ActionArgs) {
     }
     console.log("ctx delete")
     console.log(ctx)
+<<<<<<< HEAD
     // try {
     //     await editFaqs({ ctx })
     //     return redirect('/faqs')
@@ -37,6 +44,18 @@ export async function action({ request }: ActionArgs) {
 
 
 export default function DeleteRetortDialog(props: { res: retort_topic_Type }) {
+=======
+    try {
+        await deleteRetortTopic({ ctx })
+        return redirect('/retort')
+    } catch (error) {
+        return error;
+    }
+};
+
+
+export default function DeleteRetortDialog(props: { res: Retort_TopicFormValues }) {
+>>>>>>> a84ba05 (undo copy update)
     const submit = useSubmit();
 
     function handleSubmit() {

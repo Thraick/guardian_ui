@@ -9,16 +9,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "~/components/ui/dialog";
-<<<<<<< HEAD
-import { faqsType } from "./faqs";
-import { ActionArgs, redirect } from "@remix-run/node";
-import { deleteFaqs } from "~/resolvers/faqs";
-=======
 
 import { ActionArgs, redirect } from "@remix-run/node";
 import { deleteFaqs } from "~/resolvers/faqs";
 import { FaqFormValues } from "./faqs_.$id";
->>>>>>> a84ba05 (undo copy update)
+import { deleteSentiment } from "~/resolvers/sentiment";
+import { SentimentFormValues } from "./sentiments_.$id";
 
 
 
@@ -28,25 +24,21 @@ export async function action({ request }: ActionArgs) {
     const ctx = { id }
     try {
         console.log(ctx)
-        await deleteFaqs({ ctx })
-        return redirect('/faqs')
+        await deleteSentiment({ ctx })
+        return redirect('/sentiments')
     } catch (error) {
         return error;
     }
 };
 
 
-<<<<<<< HEAD
-export default function DeleteFaqDialog(props: { res: faqsType }) {
-=======
-export default function DeleteFaqDialog(props: { res: FaqFormValues }) {
->>>>>>> a84ba05 (undo copy update)
+export default function DeleteSentimentDialog(props: { res: SentimentFormValues }) {
     const submit = useSubmit();
 
     function handleSubmit() {
         const formData = new FormData();
         formData.append('id', props.res.id);
-        submit(formData, { method: "post", action: "/faqs/delete" });
+        submit(formData, { method: "post", action: "/sentiments/delete" });
     }
 
     return (
@@ -57,9 +49,9 @@ export default function DeleteFaqDialog(props: { res: FaqFormValues }) {
                     <DialogHeader className="justify-center items-center">
                         <DialogTitle>Delete Faq</DialogTitle>
                     </DialogHeader>
-                    <DialogDescription>{props.res.question}</DialogDescription>
+                    <DialogDescription>{props.res.sentiment}</DialogDescription>
                     <div>
-                        <h4>{props.res.answer}</h4>
+                        <h4>{props.res.statement}</h4>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>

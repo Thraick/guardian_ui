@@ -52,7 +52,11 @@ export async function loader({ params }: LoaderArgs) {
     try {
         console.log(params.id)
         const response = await httpRequest("get_faq", { id: params.id })
+<<<<<<< HEAD
         const memories = response.payload
+=======
+        const memories = response.payload || null
+>>>>>>> a84ba05 (undo copy update)
         console.log(memories)
         return memories[0];
     } catch (error) {
