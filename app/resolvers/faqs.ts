@@ -25,7 +25,24 @@ export const editFaqs = createResolver({
     async resolve ({
         ctx
     }) {
-        const res = await httpRequest("edit_faq", ctx)
+        const res = await httpRequest("update_faq", ctx)
+        return res
+    }
+})
+
+
+
+
+
+export const deleteFaqs = createResolver({
+    schema: z.object({
+        ctx: z.record(z.any())
+    }),
+
+    async resolve ({
+        ctx
+    }) {
+        const res = await httpRequest("delete_faq", ctx)
         return res
     }
 })

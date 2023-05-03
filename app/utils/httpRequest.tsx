@@ -1,26 +1,24 @@
+import axios from "axios";
 import { useState } from "react";
 
 const _config = {
-    token: 'ef43fa17f8c71f84b709a3125b710cf12beb8ee8d7812507d40fa231bfc48b85',
-    url: 'http://0.0.0.0:8001',
-    snt: "urn:uuid:84108875-3d79-41e6-ad21-758c389ece0e"
+    token: '6858a94d17349ed8ca2009e8835d2d3cb41e7bc1625c59e76946f5d587a20cea',
+    url: 'http://0.0.0.0:8000',
+    snt: "urn:uuid:0907afb5-fa1d-439a-b43a-0b81ce838b74"
 }
 
 
-export async function httpRequest(name: string, ctx: Record<string,any>) {
+export async function httpRequest(name: string, ctx: Record<string, any>) {
     let apiUrl = _config.url + "/js/walker_run";
-    let res = await fetch(apiUrl, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `token ${_config.token}`
-        },
-        method: "POST",
-        body: JSON.stringify({
+    try {
+        let res = await axios.post(apiUrl, {
             name: name,
             ctx: ctx
-        }),
-    });
-
-    let data = await res.json();
-    return data;
+        },
+        {headers: {Authorization: "Token " + _config.token}}
+        );
+        return res.data;
+    } catch (error) {
+        return error;
+    }
 }
