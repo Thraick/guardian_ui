@@ -8,13 +8,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.3",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-scroll-area": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.5",
     "@remix-run/node": "^1.15.0",
     "@remix-run/react": "^1.15.0",
     "@remix-run/serve": "^1.15.0",
-    "class-variance-authority": "^0.5.2",
+    "class-variance-authority": "^0.5.3",
     "clsx": "^1.2.1",
     "isbot": "^3.6.8",
     "lucide-react": "^0.170.0",
