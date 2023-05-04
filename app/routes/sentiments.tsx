@@ -30,86 +30,12 @@ export default function Sentiments() {
     const loaderData = useLoaderData() as SentimentFormValues[];
     const [searchTerm, setSearchTerm] = useState("");
 
-    const [statementId, setStatementId] = useState("");
-    const [sentimentId, setSentimentId] = useState("");
+    
 
     return (
         <>
             <div className="flex-1 justify-between flex flex-col h-screen bg-background">
-
-
-
-
-
-
-
-                <Form method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 h-3/4 max-w-4xl w-full">
-                    <div className="flex items-center justify-between mb-8">
-                        <h1 className="text-2xl font-bold">Sentiment</h1>
-                        <Link to={'/sentiments'}>
-                            <Button variant={"ghost"}><X /></Button>
-                        </Link>
-                    </div>
-                    <div className="mb-8">
-                        <Label htmlFor="question"
-                        >
-
-                        </Label>
-                        <Input
-                            name="Sentiment"
-                            type="text"
-                            defaultValue={loaderData[0].sentiment}
-                        />
-                    </div>
-                    <div className="mb-8">
-                        <div className="flex items-center justify-between mb-8">
-                            <h1 className="text-2xl font-bold">Sentiment List</h1>
-                            {/* <AddSentiment sentiment={sentiment} /> */}
-                        </div>
-                        {loaderData.map((res: any) => (
-                            <div key={res.id} className="bg-white max-w-4xl mx-auto hover:bg-accent shadow-sm rounded">
-                                <div className="flex justify-between items-center mb-8">
-                                    {open && res.sentiment_id == id ? (
-                                        <div className="mb-8">
-                                            <Label htmlFor="Sentiment">
-
-                                            </Label>
-                                            <Input key={res.statement_id}
-                                                name="Sentiment"
-                                                type="text"
-                                                defaultValue={res.statement}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <h1 >{res.statement}</h1>
-                                        </div>
-                                    )}
-                                    {open && res.sentiment_id == id ? (
-                                        <div className="flex justify-center">
-                                            <Button onClick={(event) => { ()=> setId(res.sentiment_id); }} variant={"secondary"}> Save</Button>
-                                            {/* <Button onClick={(event) => { event.preventDefault(); isOpen(false); setId(res.sentiment_id); }} variant={"secondary"}> Save</Button> */}
-                                            <Button variant={"ghost"}><X /></Button>
-                                        </div>
-                                    ) : (
-                                        <div className="flex justify-center">
-                                            <Button onClick={(event) => { event.preventDefault(); isOpen(true); setId(res.sentiment_id); }} variant={"outline"}><Edit className="" /> Edit</Button>
-                                            <Button variant={"ghost"}><Trash2 /></Button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="flex items-center justify-between">
-
-                    </div>
-                </Form>
-
-
-
-
-                {/* <div className="bg-background shadow-md p-4 flex justify-between items-center">
+                <div className="bg-background shadow-md p-4 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Sentiment List</h1>
                     <Input
                         type="text"
@@ -137,11 +63,11 @@ export default function Sentiments() {
                                         <DeleteSentimentDialog res={res} />
                                     </div>
                                 </div>
-                                <h2 className="text-gray-700">{res.statement}</h2>
+                                {/* <h2 className="text-gray-700">{res.statements}</h2> */}
                             </div>
                         ))
                     }
-                </div> */}
+                </div>
             </div>
 
             <div className="absolute bottom-10 right-10">

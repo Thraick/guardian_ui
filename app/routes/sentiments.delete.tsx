@@ -51,7 +51,7 @@ export default function DeleteSentimentDialog(props: { res: SentimentFormValues 
                     </DialogHeader>
                     <DialogDescription>{props.res.sentiment}</DialogDescription>
                     <div>
-                        <h4>{props.res.statement}</h4>
+                        <h4>{props.res.sentiment}</h4>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>

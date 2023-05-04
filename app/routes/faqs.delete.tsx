@@ -36,6 +36,7 @@ export default function DeleteFaqDialog(props: { res: FaqFormValues }) {
     function handleSubmit() {
         const formData = new FormData();
         formData.append('id', props.res.id);
+        console.log(formData)
         submit(formData, { method: "post", action: "/faqs/delete" });
     }
 

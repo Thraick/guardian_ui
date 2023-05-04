@@ -47,3 +47,46 @@ export const deleteSentiment = createResolver({
     }
 })
 
+
+
+
+export const newStatement = createResolver({
+    schema: z.object({
+        ctx: z.record(z.any())
+    }),
+
+    async resolve ({
+        ctx
+    }) {
+        const res = await httpRequest("new_statement", ctx)
+        return res
+    }
+})
+
+
+export const editStatement = createResolver({
+    schema: z.object({
+        ctx: z.record(z.any())
+    }),
+
+    async resolve ({
+        ctx
+    }) {
+        const res = await httpRequest("update_statement", ctx)
+        return res
+    }
+})
+
+
+export const deleteStatement = createResolver({
+    schema: z.object({
+        ctx: z.record(z.any())
+    }),
+
+    async resolve ({
+        ctx
+    }) {
+        const res = await httpRequest("delete_statement", ctx)
+        return res
+    }
+})
