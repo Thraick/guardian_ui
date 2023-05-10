@@ -45,7 +45,7 @@ export default function Sidebar() {
                                     </NavLink>
                                 </li>
                                 <li className="text-muted my-2 cursor-pointer" onClick={handleSublistItemClick}>
-                                    <NavLink to={"entity_config/replace"} className={({ isActive }) => isActive ? "block border-l hover:text-accent transition text-secondary duration-150 px-2 ": "block border-l hover:text-accent transition duration-150 px-2 "}>
+                                    <NavLink to={"entity_config/replaces"} className={({ isActive }) => isActive ? "block border-l hover:text-accent transition text-secondary duration-150 px-2 ": "block border-l hover:text-accent transition duration-150 px-2 "}>
                                         Replace
                                     </NavLink>
                                 </li>
@@ -65,6 +65,11 @@ export default function Sidebar() {
                     <li className="text-muted cursor-pointer" onClick={() => handleClick('item4')}>
                         <NavLink to={"retort"} className={({ isActive }) => isActive ? "block border-l hover:text-accent transition text-secondary duration-150 px-2 ": "block border-l hover:text-accent transition duration-150 px-2 "}>
                             Retort
+                        </NavLink>
+                    </li>
+                    <li className="text-muted cursor-pointer" onClick={() => handleClick('item5')}>
+                        <NavLink to={"tfm_ner"} className={({ isActive }) => isActive ? "block border-l hover:text-accent transition text-secondary duration-150 px-2 ": "block border-l hover:text-accent transition duration-150 px-2 "}>
+                            Tfm Ner
                         </NavLink>
                     </li>
                 </ul>

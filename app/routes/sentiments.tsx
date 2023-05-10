@@ -71,7 +71,7 @@ export default function Sentiments() {
             </div>
 
             <div className="absolute bottom-10 right-10">
-                <Link to={'/faqs/new'}>
+                <Link to={'/sentiments/new'}>
                     <Button variant={"secondary"} className="hover:bg-accent rounded-full  h-14 py-4 px-4">
                         <Plus />
                     </Button>

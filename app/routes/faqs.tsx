@@ -22,12 +22,11 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 
-export type faqsType = {
-    id: string,
-    question: string,
-    answer: string
-}
-
+// export type faqsType = {
+//     id: string,
+//     question: string,
+//     answer: string
+// }
 
 
 export default function faqs() {

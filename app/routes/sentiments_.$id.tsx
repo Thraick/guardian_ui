@@ -9,8 +9,10 @@ import { Edit, Trash2, X, ShieldCheck } from "lucide-react";
 import { httpRequest } from "~/utils/httpRequest";
 import { useState } from "react";
 import * as z from 'zod';
-import { editSentiment, editStatement } from "~/resolvers/sentiment";
-import AddSentiment from "./sentiment_utterance";
+import { editSentiment, editStatement, newSentiment, newStatement } from "~/resolvers/sentiment";
+import AddSentiment from "./sentiments_.$id_.statement";
+import DeleteSentimentDialog from "./sentiments.delete";
+import DeleteStatementDialog from "./sentiments_.$id_.delete";
 
 
 // const statementSchema = z.string().min(3, { message: 'Statement must be at least 3 characters long' }).nonempty({ message: 'Statement is required' });
@@ -45,7 +47,7 @@ const schema = z.object({
 });
 
 export type SentimentFormValues = z.infer<typeof schema>;
-type StatementFormValues = z.infer<typeof statementSchema>;
+export type StatementFormValues = z.infer<typeof statementSchema>;
 
 
 
@@ -54,6 +56,7 @@ export async function action({ request, params }: ActionArgs) {
     const formData = await request.formData();
     const sentiment = formData.get('sentiment')
     const statement = formData.get('statement')
+    const new_statement = formData.get('new_statement')
     const id = formData.get('id')
     let ctx = {}
 
@@ -84,6 +87,19 @@ export async function action({ request, params }: ActionArgs) {
             }
             return redirect(`/sentiments/${params.id}`)
         }
+        else if (new_statement) {
+            ctx = {
+                new_statement,
+                id
+            }
+            console.log("ctx new sentiment")
+            console.log(ctx)
+            const payload = await newStatement({ ctx })
+            if (payload.info.warning) {
+                return payload.info.warning;
+            }
+            return redirect(`/sentiments/${params.id}`)
+        }
         return null
         // return redirect(`/sentiments/${params.id}`)
     } catch (error) {
@@ -100,6 +116,10 @@ export async function loader({ params }: LoaderArgs) {
         const response = await httpRequest("get_sentiment", { id: params.id })
         const memories = response.payload || null
         console.log(memories)
+        if (!memories) {
+
+            return null
+        }
         return memories[0];
     } catch (error) {
         console.log("error")
@@ -118,9 +138,10 @@ export default function Sentiments() {
     const [sentimentId, setSentimentId] = useState(false);
     const [statementId, setStatementId] = useState("");
     const [statement, setStatement] = useState("")
+    const [reverselist, setReverseList] = useState(loaderData.statements)
 
-
-    const [formValues, setFormValues] = useState<SentimentFormValues>({ sentiment: loaderData.sentiment, statements: loaderData.statements, id: loaderData.id } || { id: "", sentiment: "", statements: [] });
+    const [formValues, setFormValues] = useState<SentimentFormValues>({ sentiment: loaderData.sentiment, statements: reverselist, id: loaderData.id } || { id: "", sentiment: "", statements: [] });
+    // const [formValues, setFormValues] = useState<SentimentFormValues>({ sentiment: loaderData.sentiment, statements: loaderData.statements, id: loaderData.id } || { id: "", sentiment: "", statements: [] });
     const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -206,15 +227,17 @@ export default function Sentiments() {
 
     return (
         <>
-            <div className="flex justify-center  items-center bg-background">
-                <div className="px-8 pt-6 pb-8 mb-8 h-3/4 max-w-4xl w-full">
+            <div className="flex justify-center h-screen items-center bg-background">
+                <div className="px-8 h-3/4  max-w-4xl w-full flex flex-col">
+
+
                     <div className="flex items-center justify-between mb-8">
                         <h1 className="text-2xl font-bold">Update Sentiment</h1>
                         <Link to={'/sentiments'}>
                             <Button variant={"ghost"}><X /></Button>
                         </Link>
                     </div>
-                    <div className="mb-4 flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-4 ">
                         {sentimentId ?
                             <div className="w-full">
                                 {/* <Label htmlFor="sentiment">Sentiment</Label> */}
@@ -254,7 +277,8 @@ export default function Sentiments() {
                                 </div>
                                 :
                                 <div className="flex justify-between ">
-                                    <Button variant={"ghost"}><Trash2 /></Button>
+                                    {/* <Button variant={"ghost"}><Trash2 /></Button> */}
+                                    <DeleteSentimentDialog res={formValues} />
                                     {/* <Button onClick={() => setStatementId("")} variant={"ghost"}><Trash2 /></Button> */}
                                 </div>
                             }
@@ -264,60 +288,64 @@ export default function Sentiments() {
 
                     <div className="flex items-center justify-between mb-8">
                         <h1 className="text-2xl font-bold">Sentiment List</h1>
-                        <AddSentiment res={formValues} />
-                        {/* <Button onClick={() => handleStatementSubmit()} variant={"secondary"}>New Statement</Button> */}
+                        {/* <AddSentiment res={formValues} /> */}
+                        <Link to={`/sentiments/${formValues.id}/statement`}>
+                            <Button variant={"secondary"}>New Statement</Button>
+                        </Link>
                     </div>
+                    <div className="overflow-y-auto mt-4 max-h-3/4 scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex-grow">
 
-                    {/* <pre>{JSON.stringify(formValues.statements, null, 1)}</pre> */}
 
-                    {formValues.statements.map((res: StatementFormValues) => (
-                        <div key={res.id} className="mb-4 flex justify-between items-center">
 
-                            {res.id === statementId ?
-                                <div className="w-full">
-                                    <Input
-                                        name="statement"
-                                        type="text"
-                                        value={statement}
-                                        onChange={(event) => setStatement(event.target.value)}
-                                        autoFocus
-                                        className="w-fill"
-                                    />
-
-                                    {formErrors.find((error) => error.path[0] === 'statement')?.message ? <div>{formErrors.find((error) => error.path[0] === 'statement')?.message}</div> : null}
-                                </div>
-                                :
-                                <div className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50">
-                                    {res.statement}
-                                </div>
-                            }
-                            <div className=" w-3/12 flex justify-between ml-6">
-                                {res.id === statementId ?
-                                    <div className="flex justify-between">
-                                        <Button onClick={() => handleStatementSubmit()} variant={"secondary"} ><ShieldCheck /> Save</Button>
-                                    </div>
-                                    :
-                                    <div className="flex justify-between ">
-                                        <Button onClick={() => handleEditStatement(res)} variant={"outline"}><Edit /> Edit</Button>
-                                    </div>
-                                }
+                        {loaderData.statements.map((res: StatementFormValues) => (
+                            <div key={res.id} className="mb-4 flex justify-between items-center">
 
                                 {res.id === statementId ?
-                                    <div className="flex justify-between">
-                                        <Button onClick={() => setStatementId("")} variant={"ghost"}><X /></Button>
+                                    <div className="w-full">
+                                        <Input
+                                            name="statement"
+                                            type="text"
+                                            value={statement}
+                                            onChange={(event) => setStatement(event.target.value)}
+                                            autoFocus
+                                            className="w-fill"
+                                        />
+
+                                        {formErrors.find((error) => error.path[0] === 'statement')?.message ? <div>{formErrors.find((error) => error.path[0] === 'statement')?.message}</div> : null}
                                     </div>
                                     :
-                                    <div className="flex justify-between ">
-                                        <Button onClick={() => setStatementId("")} variant={"ghost"}><Trash2 /></Button>
+                                    <div className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50">
+                                        {res.statement}
                                     </div>
                                 }
+                                <div className=" w-3/12 flex justify-between ml-6">
+                                    {res.id === statementId ?
+                                        <div className="flex justify-between">
+                                            <Button onClick={() => handleStatementSubmit()} variant={"secondary"} ><ShieldCheck /> Save</Button>
+                                        </div>
+                                        :
+                                        <div className="flex justify-between ">
+                                            <Button onClick={() => handleEditStatement(res)} variant={"outline"}><Edit /> Edit</Button>
+                                        </div>
+                                    }
 
+                                    {res.id === statementId ?
+                                        <div className="flex justify-between">
+                                            <Button onClick={() => setStatementId("")} variant={"ghost"}><X /></Button>
+                                        </div>
+                                        :
+                                        <div className="flex justify-between ">
+                                            {/* <Button onClick={() => setStatementId("")} variant={"ghost"}><Trash2 /></Button> */}
+                                            <DeleteStatementDialog res={res}/>
+                                        </div>
+                                    }
+
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
-
         </>
     );
 }

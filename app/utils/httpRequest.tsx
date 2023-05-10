@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const _config = {
-    token: '6858a94d17349ed8ca2009e8835d2d3cb41e7bc1625c59e76946f5d587a20cea',
+    token: '047fba162d654c134434b24ae4e96e9f8437f1bb3351bf32f084b2edeea0501f',
     url: 'http://0.0.0.0:8000',
     snt: "urn:uuid:0907afb5-fa1d-439a-b43a-0b81ce838b74"
 }

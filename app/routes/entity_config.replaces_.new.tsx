@@ -6,46 +6,54 @@ import { Button } from "~/components/ui/button";
 import { Form, Link, useActionData, useSubmit } from "@remix-run/react";
 import { Textarea } from "~/components/ui/textarea";
 import { X } from "lucide-react";
-
 import * as z from 'zod';
 import { useState } from "react";
-import { newSentiment } from "~/resolvers/sentiment";
+import { createLabel } from "~/resolvers/configLabel";
+import { createReplace } from "~/resolvers/configReplace";
 
 
 
 
-const sentimentSchema = z.object({
-    sentiment: z.string().min(3, { message: 'Sentiment must be at least 3 characters long' }).nonempty({ message: 'Sentiment is required' }),
+const keySchema = z.string().nonempty({ message: 'Key is required' });
+const valueSchema = z.string().nonempty({ message: 'Value is required' });
+
+const schema = z.object({
+    key: keySchema,
+    value: valueSchema
 });
-type SentimentSchema = z.infer<typeof sentimentSchema>;
+
+type FormValues = z.infer<typeof schema>;
 
 
 export async function action({ request }: ActionArgs) {
 
     const formData = await request.formData();
-    const sentiment = formData.get('sentiment')
-
+    const key = formData.get('key')
+    const value = formData.get('value')
     const ctx = {
-        sentiment
+        key,
+        value
     }
     try {
         console.log(ctx)
-        const payload = await newSentiment({ ctx })
+        const payload = await createReplace({ ctx })
         if (payload.info.warning) {
             return payload.info.warning;
         }
-        return redirect('/sentiments')
+        return redirect('/entity_config/replaces')
     } catch (error) {
         return error;
     }
 };
 
 
-export default function NewFaqs() {
+
+export default function NewReplace() {
+
     const submit = useSubmit();
 
     const actionData = useActionData();
-    const [formValues, setFormValues] = useState<SentimentSchema>({ sentiment: ''});
+    const [formValues, setFormValues] = useState<FormValues>({ key: '', value: ''});
     const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -55,7 +63,7 @@ export default function NewFaqs() {
 
     function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const validationResult = sentimentSchema.safeParse(formValues);
+        const validationResult = schema.safeParse(formValues);
         if (validationResult.success) {
             // Handle successful form submission
             setFormErrors([])
@@ -65,40 +73,55 @@ export default function NewFaqs() {
         }
     };
 
-    function handleSubmit({ formValues }: { formValues: SentimentSchema }) {
+    function handleSubmit({ formValues }: { formValues: FormValues }) {
         const formData = new FormData();
-        formData.append('sentiment', formValues.sentiment);
-        submit(formData, { method: 'post', action: '/sentiments/new' });
+        formData.append('key', formValues.key);
+        formData.append('value', formValues.value);
+        submit(formData, { method: 'post', action: '/entity_config/replaces/new' });
     }
-
 
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="max-w-2xl w-full">
                 <Form onSubmit={handleFormSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div className="flex items-center justify-between mb-4">
-                        <h1 className="text-2xl font-bold">New Sentiment</h1>
-                        <Link to={'/faqs'}>
+                        <h1 className="text-2xl font-bold">New Replace</h1>
+                        <Link to={'/entity_config/labels'}>
                             <Button variant={"ghost"}><X /></Button>
                         </Link>
                     </div>
 
                     <div className="mb-4">
-                        <Label htmlFor="sentiment">Sentiment</Label>
+                        <Label htmlFor="key"
+                        >
+                            Key
+                        </Label>
                         <Input
-                            name="sentiment"
+                            name="key"
                             type="text"
-                            value={formValues.sentiment}
+                            value={formValues.key}
                             onChange={handleInputChange}
                             autoFocus
                         />
-                        {formErrors.find((error) => error.path[0] === 'sentiment')?.message ? <div>{formErrors.find((error) => error.path[0] === 'sentiment')?.message}</div> : null}
+                        {formErrors.find((error) => error.path[0] === 'key')?.message ? (<div>{formErrors.find((error) => error.path[0] === 'key')?.message}</div>) : null}
+                    </div>
+                    <div className="mb-4">
+                        <Label htmlFor="value"
+                        >
+                            Value
+                        </Label>
+                        <Input
+                            name="value"
+                            type="text"
+                            value={formValues.value}
+                            onChange={handleInputChange}
+                        />
+                        {formErrors.find((error) => error.path[0] === 'value')?.message ? (<div>{formErrors.find((error) => error.path[0] === 'value')?.message}</div>) : null}
                     </div>
                     <div className="flex items-center justify-between">
                         <Button type="submit" variant={"secondary"}>Create</Button>
                     </div>
                 </Form>
-
                 {
                     actionData &&
                     <div className="bg-yellow-100 text-center text-yellow-700 p-4" role="alert">
@@ -107,7 +130,6 @@ export default function NewFaqs() {
                     </div>
                 }
             </div>
-
         </div>
     )
 }
